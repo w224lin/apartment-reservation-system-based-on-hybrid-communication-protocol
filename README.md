@@ -30,3 +30,35 @@ This College-dormitory-reservation-system-based-on-hybrid-communication-protocol
 ### Installation
 
 1. Clone the project repository:
+   git clone <repository-url>
+2. Navigate to the project directory:
+   cd dormitory-reservation-system
+3. Install required libraries (example command below, adjust as necessary):
+   sudo apt-get install libsocket++ libthread-pool++
+4. Compile the project:
+   make all
+
+### Running the Application
+
+- Start the server:
+  ./serverM
+
+- Start the data base:
+  ./serverS
+  ./serverD
+  ./serverU
+
+- In a separate terminal, launch the client:
+  ./client
+  
+## Contributing
+
+Contributions to the College-dormitory-reservation-system-based-on-hybrid-communication-protocol System are welcome. Please submit pull requests for any bug fixes, features, or improvements.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+
+
+
+
