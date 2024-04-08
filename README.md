@@ -1,9 +1,9 @@
-# College-dormitory-reservation-system-based-on-hybrid-communication-protocol
-In Linux environment, responsible for the design and implementation of a C++ based college dormitory booking system. The system architecture adopts a modular design, including client, server, and database server, which is committed to providing a safe and efficient dormitory query and reservation solution.
+# Apartment-reservation-system-based-on-hybrid-communication-protocol
+In Linux environment, responsible for the design and implementation of a C++ based apartment booking system. The system architecture adopts a modular design, including client, server, and database server, which is committed to providing a safe and efficient room query and reservation solution.
 
 ## Overview
 
-This College-dormitory-reservation-system-based-on-hybrid-communication-protocol System is designed and implemented in C++ under the Linux environment. The system boasts a robust encryption/decryption mechanism to secure sensitive information and utilizes a modular architecture for efficient and secure operations. It features an innovative TCP/UDP mixed communication protocol, optimizing both security and efficiency in data transmission, and leverages advanced multi-threading and thread pool technologies for high concurrency and performance.
+This Apartment-reservation-system-based-on-hybrid-communication-protocol System is designed and implemented in C++ under the Linux environment. The system boasts a robust encryption/decryption mechanism to secure sensitive information and utilizes a modular architecture for efficient and secure operations. It features an innovative TCP/UDP mixed communication protocol, optimizing both security and efficiency in data transmission, and leverages advanced multi-threading and thread pool technologies for high concurrency and performance.
 
 ## Key Features
 
