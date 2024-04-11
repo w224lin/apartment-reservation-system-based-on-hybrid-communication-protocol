@@ -16,6 +16,8 @@
 
 std::unordered_map<std::string, std::string> credentials;// Create the hashMap to store the username and password.
 std::unordered_map<std::string, std::string> singleRoom; // Store received single room information.
+std::unordered_map<std::string, std::string> doubleRoom; // Store received double room information.
+std::unordered_map<std::string, std::string> suitsRoom; // Store received suits room information.
 
 
 // Decryption function
@@ -39,29 +41,59 @@ std::string decrypt(const std::string& input) {
 void handleUDP(int udpSocket) {
     struct sockaddr_in clientAddr;
     socklen_t clientAddrLen = sizeof(clientAddr);
-    char buffer[1024]; // buffer size < 1024.
+    char buffer[1024];  // Buffer size < 1024.
+    unsigned short senderPort;
+
+    bool firstMessageS = false;  // Flag to control first message print for Server S
+    bool firstMessageD = false;  // Flag to control first message print for Server D
+    bool firstMessageU = false;  // Flag to control first message print for Server U
 
     while (true) {
-        std::memset(buffer, 0, sizeof(buffer)); // clear buffer.
+        std::memset(buffer, 0, sizeof(buffer));  // Clear buffer.
         ssize_t messageLen = recvfrom(udpSocket, buffer, sizeof(buffer) - 1, 0, (struct sockaddr*)&clientAddr, &clientAddrLen);
         if (messageLen < 0) {
             std::cerr << "Error receiving message." << std::endl;
-            continue; // error detection.
+            continue;  // Error detection.
         }
 
         // Converts the received message to a string
         std::string message(buffer, messageLen);
+
+        // Get the port number of the sender
+        senderPort = ntohs(clientAddr.sin_port);
 
         // Parse message
         std::size_t commaPos = message.find(',');
         if (commaPos != std::string::npos) {
             std::string key = message.substr(0, commaPos);
             std::string value = message.substr(commaPos + 1);
-            singleRoom[key] = value; // update reived data.
-        }
 
-        // print received message.
-        std::cout << "Received: " << message << " and stored in singleRoom hashtable." << std::endl;
+            // Determine the server based on the port number and update corresponding hashmap
+            if (senderPort == 41078) {
+                singleRoom[key] = value;  // Update received data for Server S.
+                if (!firstMessageS) {
+                    std::cout << "The main server has received the room status from Server <S> using UDP over port <44078>." << std::endl;
+                    firstMessageS = true;
+                }
+            }
+            else if (senderPort == 42078) {
+                doubleRoom[key] = value;  // Update received data for Server D.
+                if (!firstMessageD) {
+                    std::cout << "The main server has received the room status from Server <D> using UDP over port <44078>." << std::endl;
+                    firstMessageD = true;
+                }
+            }
+            else if (senderPort == 43078) {
+                suitsRoom[key] = value;  // Update received data for Server U.
+                if (!firstMessageU) {
+                    std::cout << "The main server has received the room status from Server <U> using UDP over port <44078>." << std::endl;
+                    firstMessageU = true;
+                }
+            }
+            else {
+                std::cout << "Received data from an unexpected source." << std::endl;
+            }
+        }
     }
 }
 
@@ -210,7 +242,11 @@ int main() {
     std::thread tcpThread(handleTCP, tcpSocket);
     tcpThread.detach(); // Make the thread run in the background
 
+
     std::cout << "The main server is up and running. " << std::endl;
+
+    // Wait for the UDP thread
+    udpThread.join();
 
     return 0;
 }

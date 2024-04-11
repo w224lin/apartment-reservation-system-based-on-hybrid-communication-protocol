@@ -30,7 +30,7 @@ void handleUDP(int udpSocket, const std::unordered_map<std::string, std::string>
             std::cout << "Message sent: " << message << std::endl;
         }
     }
-    std::cout << "The Server <S> has sent the room status to the main server." << std::endl;
+    std::cout << "The Server <D> has sent the room status to the main server." << std::endl;
 }
 
 // Parsing comma-separated room code and capacity.
@@ -47,11 +47,11 @@ int main() {
 
     // Create the hashMap to store the username and password.
     std::unordered_map<std::string, std::string> information;
-    std::ifstream file("./Input_files/single.txt");
+    std::ifstream file("./Input_files/double.txt");
 
     // Read the file.
     if (!file.is_open()) {
-        std::cerr << "Error opening file 'single.txt'." << std::endl;
+        std::cerr << "Error opening file 'double.txt'." << std::endl;
         return 1;
     }
 
@@ -69,7 +69,7 @@ int main() {
     file.close();
 
     // Port Number.
-    const int UDP_PORT = 41078;
+    const int UDP_PORT = 42078;
 
     // Create UDP socket
     int udpSocket = socket(AF_INET, SOCK_DGRAM, 0);
@@ -91,7 +91,7 @@ int main() {
         return 1;
     }
 
-    std::cout << "The Server <S> is up and running using UDP on port <" << UDP_PORT << ">." << std::endl;
+    std::cout << "The Server <D> is up and running using UDP on port <" << UDP_PORT << ">." << std::endl;
 
     handleUDP(udpSocket, information);
     close(udpSocket);
